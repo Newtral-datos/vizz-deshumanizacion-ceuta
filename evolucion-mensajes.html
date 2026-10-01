@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nivel de deshumanización</title><link rel="stylesheet" href="estilo.css"></head>
+<body><div id="grafico"></div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script><script src="js/serie.js"></script><script src="js/barras.js"></script>
+<script>
+barrasNivel("#grafico", {
+  arriba: "datos/evolucion-mensajes_arriba.csv", abajo: "datos/evolucion-mensajes_abajo.csv", color: "#01f3b3",
+  momentos: ["Antes", "Día de la crisis", "Después"],
+  etiquetas: { "Antes": "Mes previo", "Día de la crisis": "30 de julio", "Después": "Mes posterior" },
+  contenidos: ["Odio hacia los inmigrantes", "Sobre migración, sin odio", "Resto"],
+  colores: { "Odio hacia los inmigrantes": "#494949", "Sobre migración, sin odio": "#8c8c8c", "Resto": "#c8c8c8" },
+  tooltip: { "Odio hacia los inmigrantes": "Odio hacia inmigrantes", "Resto": "Resto de mensajes descargados" },
+  titulo: "La deshumanización en el mes previo, el 30 de julio y el mes posterior a la crisis de Ceuta",
+  subtitulo: "Mensajes al día que presentan a migrantes o colectivos racializados como animales, plagas o salvajes",
+  ejeArriba: "Deshumanizadores al día", ejeAbajo: "Publicaciones por día", medida: "Deshumanizadores al día",
+  pie: "Mensajes deshumanizadores: suma de la probabilidad que da el modelo a cada tweet, ponderada por la probabilidad de que la cuenta pertenezca a la conversación española. Barras inferiores: tweets al día, sin ponderar.<br><span class='credito'>Gráfico: Newtral.es. ▪️ Fuentes: análisis propio a partir de datos de X y los modelos de lenguaje RoBERTuito (Base y Hate Speech).</span>"
+});
+</script></body></html>

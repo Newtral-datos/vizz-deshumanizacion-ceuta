@@ -1,0 +1,81 @@
+etapa,grupo,decil_seguidores,tweets,seguidores_mediana,mediana,media
+Antes de la crisis,Deshumanizan,1,6503,23,5,28.632030282352304
+Antes de la crisis,Deshumanizan,2,4914,81,4,24.233458724436698
+Antes de la crisis,Deshumanizan,3,3995,202,5,27.383534314813144
+Antes de la crisis,Deshumanizan,4,3445,431,5,46.951902275791895
+Antes de la crisis,Deshumanizan,5,2885,910,5,46.23556407037923
+Antes de la crisis,Deshumanizan,6,2674,1789.5,5,38.355550652517685
+Antes de la crisis,Deshumanizan,7,2146,3716.5,6,143.97414608691508
+Antes de la crisis,Deshumanizan,8,1519,9876,13,101.48265737245454
+Antes de la crisis,Deshumanizan,9,803,39977,43,866.4355952025434
+Antes de la crisis,Deshumanizan,10,223,276469,137,1873.7819970998041
+Antes de la crisis,Odio sin deshumanizar,1,20697,24,5,18.995102266077453
+Antes de la crisis,Odio sin deshumanizar,2,17978,83,4,28.320189242588075
+Antes de la crisis,Odio sin deshumanizar,3,16190,202,5,40.64481052109524
+Antes de la crisis,Odio sin deshumanizar,4,15294,435,5,53.32978519643723
+Antes de la crisis,Odio sin deshumanizar,5,13672,885,5,95.4200543390807
+Antes de la crisis,Odio sin deshumanizar,6,11824,1784,6,69.93293370104888
+Antes de la crisis,Odio sin deshumanizar,7,10579,3790,8,135.0332435938968
+Antes de la crisis,Odio sin deshumanizar,8,9048,10072,18,250.09585621268567
+Antes de la crisis,Odio sin deshumanizar,9,5982,39121.5,92,971.279671280198
+Antes de la crisis,Odio sin deshumanizar,10,2235,275281,566,2767.361845848136
+Antes de la crisis,Resto sobre migración,1,12631,24,4,21.638489199999345
+Antes de la crisis,Resto sobre migración,2,12138,84,4,20.279352936162113
+Antes de la crisis,Resto sobre migración,3,12301,204,5,28.018506394331773
+Antes de la crisis,Resto sobre migración,4,12721,441,5,45.937589928775516
+Antes de la crisis,Resto sobre migración,5,13203,907,6,75.4134503812256
+Antes de la crisis,Resto sobre migración,6,12626,1797,7,62.57745432062249
+Antes de la crisis,Resto sobre migración,7,13843,3945,9,94.08278875579104
+Antes de la crisis,Resto sobre migración,8,15369,10485,16,204.2770913072644
+Antes de la crisis,Resto sobre migración,9,17947,47765,28,397.5456159343601
+Antes de la crisis,Resto sobre migración,10,21073,533511,9,526.0157594270289
+Antes de la crisis,Resto del corpus,1,88234,24,4,21.125991988360536
+Antes de la crisis,Resto del corpus,2,84730,84,4,21.588727565436418
+Antes de la crisis,Resto del corpus,3,85781,204,4,31.3503869087712
+Antes de la crisis,Resto del corpus,4,85528,438,5,42.89800878249476
+Antes de la crisis,Resto del corpus,5,82984,901,5,55.40136311488718
+Antes de la crisis,Resto del corpus,6,79643,1798,6,59.62751530130636
+Antes de la crisis,Resto del corpus,7,79936,3821,8,89.54930722250188
+Antes de la crisis,Resto del corpus,8,79753,10506,13,152.81530025288447
+Antes de la crisis,Resto del corpus,9,83105,44823,21,366.07591689292315
+Antes de la crisis,Resto del corpus,10,90061,480231,7,361.66592184417874
+Crisis y después,Deshumanizan,1,3447,24,4,14.56982217307054
+Crisis y después,Deshumanizan,2,3222,82,4,16.1143897351348
+Crisis y después,Deshumanizan,3,2846,204.5,5,14.348648922573146
+Crisis y después,Deshumanizan,4,2677,441,5,20.666057603809875
+Crisis y después,Deshumanizan,5,2592,929.5,5,34.198555009662954
+Crisis y después,Deshumanizan,6,2535,1806,5,51.28461517060118
+Crisis y después,Deshumanizan,7,2229,3717,8,50.76503835837905
+Crisis y después,Deshumanizan,8,1818,10167,17,105.68046747335323
+Crisis y después,Deshumanizan,9,1006,40199,81,728.3225805374591
+Crisis y después,Deshumanizan,10,272,245557,321,1830.927154762668
+Crisis y después,Odio sin deshumanizar,1,17545,25,5,17.0550856016104
+Crisis y después,Odio sin deshumanizar,2,17614,84,5,20.414362758961463
+Crisis y después,Odio sin deshumanizar,3,16456,204,5,25.94972370668928
+Crisis y después,Odio sin deshumanizar,4,15882,440,5,35.300225994214976
+Crisis y después,Odio sin deshumanizar,5,16140,918,5,40.73357849864928
+Crisis y después,Odio sin deshumanizar,6,16513,1798,6,47.13797883824692
+Crisis y después,Odio sin deshumanizar,7,15292,3908,8,83.67158113344055
+Crisis y después,Odio sin deshumanizar,8,14059,10170,18,201.97196375627962
+Crisis y después,Odio sin deshumanizar,9,10417,40313,99,848.2760671792041
+Crisis y después,Odio sin deshumanizar,10,3465,232083,567,2565.35471682354
+Crisis y después,Resto sobre migración,1,10854,25,4,17.725171342357964
+Crisis y después,Resto sobre migración,2,11696,85,5,20.60476654541065
+Crisis y después,Resto sobre migración,3,12387,205,5,27.273280499112236
+Crisis y después,Resto sobre migración,4,13079,446,5,39.28476317677244
+Crisis y después,Resto sobre migración,5,14407,920,6,43.0591937168593
+Crisis y después,Resto sobre migración,6,15024,1819,7,51.163615648834096
+Crisis y después,Resto sobre migración,7,17029,3977,9,74.65186657349547
+Crisis y después,Resto sobre migración,8,19981,10725,17,143.89020256090203
+Crisis y después,Resto sobre migración,9,23911,47767,40,392.27933321135794
+Crisis y después,Resto sobre migración,10,29135,570203,14,448.01211004612514
+Crisis y después,Resto del corpus,1,90155,25,4,20.283958939199696
+Crisis y después,Resto del corpus,2,97774,85,5,19.26001967220681
+Crisis y después,Resto del corpus,3,100110,204,5,22.65597072489396
+Crisis y después,Resto del corpus,4,101440,440,5,34.72676670202281
+Crisis y después,Resto del corpus,5,104182,915,6,52.117139752991754
+Crisis y después,Resto del corpus,6,109226,1793,6,46.91375305062515
+Crisis y después,Resto del corpus,7,109011,3845,8,74.73919421012468
+Crisis y después,Resto del corpus,8,108518,10386,15,168.84687440714907
+Crisis y después,Resto del corpus,9,106894,43222,36,426.9626081129288
+Crisis y después,Resto del corpus,10,103601,499504,12,484.2888991038662

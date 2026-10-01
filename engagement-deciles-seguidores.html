@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Odio y seguidores</title><link rel="stylesheet" href="estilo.css"></head>
+<body><div id="grafico"></div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script><script src="js/serie.js"></script><script src="js/deciles.js"></script>
+<script>
+decilesFacetas("#grafico", {
+  datos: "datos/engagement-deciles-seguidores.csv", valor: "media",
+  series: { "Deshumanizan": "#01f3b3", "Odio sin deshumanizar": "#494949", "Resto sobre migración": "#8c8c8c", "Resto del corpus": "#c8c8c8" },
+  facetas: ["Antes de la crisis", "Crisis y después"],
+  titulo: "El odio vende más, sobre todo en las cuentas grandes, aunque la crisis no ha influído",
+  subtitulo: "Interacciones medias por tweet en cada decil de seguidores (1 = cuentas más pequeñas). Escala logarítmica",
+  eje: "Interacciones medias por tweet", ejeX: "Decil de seguidores",
+  pie: "Ponderado por la probabilidad de pertenecer a la conversación española. Deciles calculados sobre todos los tweets del corpus.<br><span class='credito'>Gráfico: Newtral.es. ▪️ Fuentes: análisis propio a partir de datos de X y los modelos de lenguaje RoBERTuito (Base y Hate Speech).</span>"
+});
+</script></body></html>

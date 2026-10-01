@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Odio y deshumanización</title><link rel="stylesheet" href="estilo.css"></head>
+<body><div id="grafico"></div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script><script src="js/serie.js"></script><script src="js/indices.js"></script>
+<script>
+indicesDiarios("#grafico", {
+  datos: "datos/indices-deshumanizacion-odio.csv",
+  series: { "Deshumanización": "#01f3b3", "Odio hacia los inmigrantes": "#494949" },
+  titulo: "La <span class='caja caja-verde'>deshumanización</span> y el <span class='caja caja-oscura'>odio</span> hacia inmigrantes van de la mano, siendo más comunes en el mes posterior a la entrada masiva",
+  yMundial: 550, etiquetasLinea: false,
+  subtitulo: "Mensajes sobre migración al día. Índice: media anterior a la crisis = 100. Línea: media de 3 días; línea clara: cada día",
+  eje: "Índice (media previa a la crisis = 100)",
+  pie: "Deshumanización: suma de las probabilidades del modelo; odio según pysentimiento (HatEval). Ponderado por la probabilidad de pertenecer a la conversación española.<br><span class='credito'>Gráfico: Newtral.es. ▪️ Fuentes: análisis propio a partir de datos de X y los modelos de lenguaje RoBERTuito (Base y Hate Speech).</span>"
+});
+</script></body></html>

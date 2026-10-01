@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deshumanización diaria</title><link rel="stylesheet" href="estilo.css"></head>
+<body><div id="grafico"></div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script><script src="js/serie.js"></script>
+<script>
+serieDiaria("#grafico", {
+  arriba: "datos/tendencia-deshumanizacion_arriba.csv", abajo: "datos/tendencia-deshumanizacion_abajo.csv", color: "#01f3b3",
+  titulo: "Deshumanización diaria: lo esperado y lo real",
+  subtitulo: "Mensajes deshumanizadores al día, en todos los mensajes. Línea: media de 3 días; línea clara: cada día",
+  medida: "Estimación deshumanizadores", colorDia: "#a6fbe4", yMundial: 1100,
+  tooltip: { "Mensajes deshumanizadores": null, "Odio hacia los inmigrantes": "Odio hacia inmigrantes", "Resto": "Resto de mensajes descargados" }, 
+  contenidos: ["Mensajes deshumanizadores", "Odio hacia los inmigrantes", "Sobre migración, sin odio", "Resto"],
+  colores: { "Mensajes deshumanizadores": "#01f3b3", "Odio hacia los inmigrantes": "#494949", "Sobre migración, sin odio": "#8c8c8c", "Resto": "#c8c8c8" },
+  pie: "Mensajes deshumanizadores: suma de la probabilidad que da el modelo a cada tweet, ponderada por la probabilidad de pertenecer a la conversación española.<br>Tendencia esperada: número de mensajes según los días previos a la crisis, proyectado sin el posible efecto del Mundial.<br>Barras: tweets al día, sin ponderar.<br><span class='credito'>Gráfico: Newtral.es. ▪️ Fuentes: análisis propio a partir de datos de X y los modelos de lenguaje RoBERTuito (Base y Hate Speech).</span>"
+});
+</script></body></html>

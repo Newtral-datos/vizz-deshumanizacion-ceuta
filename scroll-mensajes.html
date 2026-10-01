@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mensajes deshumanizadores: scroll</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:16px;font:14px/1.4 "Helvetica Neue",Helvetica,Arial,sans-serif;color:#3a3a3a;background:#fff}
+.scroll{max-width:900px;margin:auto;display:flex;flex-direction:column;align-items:center;padding:30px 0}
+.movil{position:relative;width:320px;height:620px;background:#000;border-radius:44px;padding:12px;border:3px solid #1f2b27;box-shadow:0 0 50px 6px rgba(1,243,179,.22),0 10px 30px rgba(1,243,179,.12)}
+.movil:before{content:"";position:absolute;top:18px;left:50%;transform:translateX(-50%);width:84px;height:22px;background:#000;border-radius:14px;z-index:3;box-shadow:0 0 0 2px #151515}
+.pantalla{position:relative;height:100%;border-radius:32px;overflow-y:auto;overflow-x:hidden;background:#000;color:#fff;padding:0 18px 160px;scrollbar-width:none;overscroll-behavior:contain}
+.pantalla::-webkit-scrollbar{display:none}
+.espacio{height:520px}
+.bloque,.msg{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.visible{opacity:1!important;transform:none!important}
+.bloque{margin:30px 0;font-size:1.3rem;line-height:1.75;font-weight:600}
+.bloque .caja{background:#01f3b3;color:#3a3a3a;padding:0 .25em;border:4px solid #01f3b3;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.msg{border-bottom:1px solid #2a2a2a;padding:18px 0}
+.msg .fecha{font-size:.72rem;color:#8c8c8c;margin:0 0 6px;letter-spacing:.02em}
+.msg .texto{font-size:.98rem;line-height:1.4;margin:0 0 10px}
+.msg .metr{display:flex;gap:16px;font-size:.78rem;color:#bfbfbf}
+.msg .metr .corazon{color:#01f3b3}
+.pista{position:absolute;left:12px;right:12px;bottom:12px;height:90px;pointer-events:none;background:linear-gradient(transparent,#000 70%);border-radius:0 0 32px 32px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:20px;font-size:1.15rem;font-weight:600;color:#fff;z-index:2;transition:opacity .5s}
+.pista span{display:block;color:#01f3b3;font-size:1.3rem;animation:bota 1.4s ease-in-out infinite}
+@keyframes bota{50%{transform:translateY(5px)}}
+.fin{height:560px}
+.apagado{position:absolute;inset:12px;border-radius:32px;background:#fff;opacity:0;pointer-events:none;z-index:4}
+.movil.apagando .apagado{animation:apagar 1s ease-in forwards}
+@keyframes apagar{0%{opacity:0;transform:scale(1,1)}12%{opacity:.85;transform:scale(1,1)}55%{opacity:1;transform:scale(1,.012)}85%{opacity:1;transform:scale(.015,.012)}100%{opacity:0;transform:scale(0,0)}}
+.movil{transition:opacity .7s ease,transform .7s ease}
+.movil.fuera{opacity:0;transform:scale(.92)}
+.escena{width:100%;display:flex;align-items:center;justify-content:center;min-height:700px}
+.titular{display:none;max-width:760px;margin:0 auto;text-align:center;font:600 clamp(1.6rem,4.4vw,2.7rem)/1.2 "Helvetica Neue",Helvetica,Arial,sans-serif;color:#3a3a3a;letter-spacing:-.01em;opacity:0;transform:translateY(16px);transition:opacity .9s ease,transform .9s ease}
+.titular.visible{opacity:1;transform:none}
+.titular .sub{text-decoration:underline;text-decoration-color:#01f3b3;text-decoration-thickness:.13em;text-underline-offset:.14em;text-decoration-skip-ink:none}
+</style></head>
+<body><div class="scroll">
+<div class="escena"><div class="movil" id="movil"><div class="pantalla" id="pantalla"><div class="espacio"></div><div id="lista"></div><div class="fin"></div></div><div class="apagado"></div>
+<div class="pista" id="pista">Desliza<span>&#9660;</span></div></div>
+<h1 class="titular" id="titular"><span class="sub">Investigación</span> | Así ha aumentando la <span class="sub">deshumanización</span> de inmigrantes en <span class="sub">redes sociales</span> tras la crisis de <span class="sub">Ceuta</span></h1></div>
+</div>
+<script>
+const SECUENCIA=[{"k": "b", "h": "En el mes previo a la crisis de Ceuta se publicaron una media de <span class=\"caja\">348 mensajes</span> diarios en redes sociales donde <span class=\"caja\">se deshumanizaba a los inmigrantes</span>"}, {"k": "m", "f": "30 jun 2026", "t": "Los panchitos no son aptos para vivir en civilización y aunque muchos no estaréis de acuerdo, no saben respetar el silencio y las normas, tienen más desarrollado el instinto animal, son sucios y salvajes, sólo saben pedir y que les sirvan, su CI es 60/70", "l": 684, "c": 73}, {"k": "m", "t": "Otro de los casos aislados de los monos de la selva en libertad. Te joden tu negocio te lo destrozan y mañana volverán a hacer lo mismo en otro lugar. Importas selva, obtienes salvajes.", "f": "8 jul 2026", "l": 318, "c": 121}, {"k": "m", "f": "10 jul 2026", "t": "Son animales, bestias salvajes de piel oscura que merecen volver a su jungla. Nunca se van a integrar, vienen a invadirnos y saquear nuestros recursos.", "l": 15, "c": 0}, {"k": "m", "t": "Hay que exterminarlos,no queda más remedio y el que quiera convivir con estas ratas que se vaya pa África.", "f": "17 jul 2026", "l": 192, "c": 3}, {"k": "m", "t": "Ni las cucarachas de Ceuta quieren ser marroquíes", "f": "30 jul 2026", "l": 11, "c": 0}, {"k": "m", "t": "Empezad a boicotear el mundial que nos han obligado a hacer con los simios incivilizados del sur", "f": "30 jul 2026", "l": 27, "c": 0}, {"k": "b", "h": "El <span class=\"caja\">30 de julio</span>, mientras se producía la entrada masiva de migrantes en Ceuta, la deshumanización aumentó un <span class=\"caja\">255%</span>"}, {"k": "m", "t": "Estos hijos de puta han llenado Ceuta de subhumanos, bestias y violadores más calientes que los frenos de un tren y todavía tienen los huevos de decir que se respira absoluta normalidad.", "f": "13 ago 2026", "l": 107, "c": 20}, {"k": "m", "t": "Cada uno en su continente dice la mora, y está Europa llena de moros, que son como cucarachas.", "f": "18 ago 2026", "l": 1781, "c": 98}, {"k": "m", "t": "Le paso a mi hermana un inocente meme de una cucaracha en una boya que pone: \"Ahora también saben bucear\". Y mi consanguínea suelta: \"Es un marroquí agarrado a las boyas de Pedro Sánchez\". La quiero muchísimo.", "f": "21 ago 2026", "l": 6, "c": 1}, {"k": "m", "t": "No estamos en el mismo estado de la evolución, debemos proteger a las mujeres europeas de estos salvajes que no se pueden contener sexualmente.", "f": "22 ago 2026", "l": 222, "c": 112}, {"k": "b", "h": "Aunque este tipo de mensajes se redujeron en agosto, continuaron siendo más comunes que antes de la entrada masiva."}, {"k": "b", "h": "Cada día, se publicaron unos <span class=\"caja\">70 mensajes más</span> deshumnaizando mensajes que durante el mes anterior."}];
+const lista=document.getElementById("lista"),pantalla=document.getElementById("pantalla"),pista=document.getElementById("pista");
+const num=n=>n.toLocaleString("es-ES");
+SECUENCIA.forEach(s=>{
+  const e=document.createElement("div");
+  if(s.k==="b"){e.className="bloque";e.innerHTML=s.h}
+  else{
+    e.className="msg";
+    const f=document.createElement("p");f.className="fecha";f.textContent=s.f;
+    const t=document.createElement("p");t.className="texto";t.textContent=s.t;
+    const x=document.createElement("div");x.className="metr";
+    x.innerHTML='<span><span class="corazon">♥</span> '+num(s.l)+'</span><span>Compartidos: '+num(s.c)+'</span>';
+    e.append(f,t,x);
+  }
+  lista.append(e);
+});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target)}}),{root:pantalla,threshold:.2});
+lista.querySelectorAll(".msg,.bloque").forEach(e=>io.observe(e));
+const movil=document.getElementById("movil"),titular=document.getElementById("titular");let apagado=false;
+pantalla.addEventListener("scroll",()=>{
+  pista.style.opacity=pantalla.scrollTop>40?0:1;
+  if(!apagado&&pantalla.scrollTop+pantalla.clientHeight>=pantalla.scrollHeight-4){
+    apagado=true;pantalla.style.overflow="hidden";
+    setTimeout(()=>{movil.classList.add("apagando")},350);
+    setTimeout(()=>{movil.classList.add("fuera")},1500);
+    setTimeout(()=>{movil.style.display="none";titular.style.display="block";requestAnimationFrame(()=>requestAnimationFrame(()=>titular.classList.add("visible")))},2250);
+  }
+},{passive:true});
+</script></body></html>

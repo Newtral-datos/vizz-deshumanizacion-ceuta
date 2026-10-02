@@ -12,6 +12,6 @@ serieDiaria("#grafico", {
   tooltip: { "Mensajes deshumanizadores": null, "Odio hacia los inmigrantes": "Odio hacia inmigrantes", "Resto": "Resto de mensajes descargados" }, 
   contenidos: ["Mensajes deshumanizadores", "Odio hacia los inmigrantes", "Sobre migración, sin odio", "Resto"],
   colores: { "Mensajes deshumanizadores": "#01f3b3", "Odio hacia los inmigrantes": "#494949", "Sobre migración, sin odio": "#8c8c8c", "Resto": "#c8c8c8" },
-  pie: "Odio: clasificador de pysentimiento entrenado con HatEval (probabilidad ≥ 0,5), sin validación propia. Mensajes sobre migración ponderados por la probabilidad de pertenecer a la conversación española.<br>Tendencia esperada: número de mensajes según los días previos a la crisis, proyectado sin el posible efecto del Mundial.<br>Barras: tweets al día, sin ponderar.<br><span class='credito'>Gráfico: Newtral.es. ▪️ Fuentes: análisis propio a partir de datos de X y los modelos de lenguaje RoBERTuito (Base y Hate Speech).</span>"
+  pie: "Odio: clasificador de pysentimiento entrenado con HatEval (probabilidad ≥ 0,5), sin validación propia. Mensajes sobre migración ponderados por la probabilidad de pertenecer a la conversación española.<br>Tendencia esperada: número de mensajes según los días previos a la crisis, proyectado sin el posible efecto del Mundial.<br>Barras: tweets al día, ponderados por la misma probabilidad.<br><span class='credito'>Gráfico: Newtral.es. ▪️ Fuentes: análisis propio a partir de datos de X y los modelos de lenguaje RoBERTuito (Base y Hate Speech).</span>"
 });
 </script></body></html>

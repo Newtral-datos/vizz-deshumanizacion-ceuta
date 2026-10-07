@@ -7,7 +7,7 @@ async function decilesFacetas(sel, cfg) {
   const grupos = Object.keys(cfg.series), v = cfg.valor ?? "media";
   const cont = d3.select(sel).classed("serie", true);
   cont.html(`<h2>${cfg.titulo}</h2><p class="sub">${cfg.subtitulo}</p><div class="leyenda">` +
-    grupos.map(g => `<span><i style="background:${cfg.series[g]}"></i>${g}</span>`).join("") +
+    grupos.map(g => `<span><i style="background:${cfg.series[g]}"></i>${cfg.nombres?.[g] ?? g}</span>`).join("") +
     `</div><div class="lienzo"></div><p class="pie">${cfg.pie}</p>`);
   const lienzo = cont.select(".lienzo");
   let ancho = 0;
@@ -63,7 +63,7 @@ async function decilesFacetas(sel, cfg) {
         const filas = grupos.map((k, j) => ({ k, d: serie[j].find(s => s.decil_seguidores === dec) })).filter(f => f.d)
           .sort((a, b) => b.d[v] - a.d[v]);
         guia.attr("x1", xd(dec)).attr("x2", xd(dec)).attr("opacity", .8);
-        tip.html(`<b>${etapa}. Decil ${dec}</b>` + filas.map(f => `<br><span style="${sub(cfg.series[f.k])}">${f.k}</span>: <b>${fmt(f.d[v])}</b>`).join(""))
+        tip.html(`<b>${etapa}. Decil ${dec}</b>` + filas.map(f => `<br><span style="${sub(cfg.series[f.k])}">${cfg.nombres?.[f.k] ?? f.k}</span>: <b>${fmt(f.d[v])}</b>`).join(""))
           .style("opacity", 1);
         const ax = ox + xd(dec), tw = tip.node().offsetWidth;
         tip.style("left", Math.max(0, ax + 10 + tw > W ? ax - 10 - tw : ax + 10) + "px").style("top", (oy + tit + 10) + "px");

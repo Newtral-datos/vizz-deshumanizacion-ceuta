@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deshumanización y seguidores</title><link rel="stylesheet" href="estilo.css"></head>
+<body><div id="grafico"></div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script><script src="js/serie.js"></script><script src="js/deciles-apiladas.js"></script>
+<script>
+decilesApiladas("#grafico", {
+  datos: "datos/deshumanizacion-deciles-tipo.csv",
+  partes: { "Tweets propios": "#8c8c8c", "Respuestas": "#01f3b3", "Citas": "#494949" },
+  facetas: ["Antes de la crisis", "Crisis y después"],
+  titulo: "La deshumanización sale sobre todo de las respuestas de cuentas pequeñas",
+  subtitulo: "Mensajes deshumanizadores por cada 1.000 mensajes, según el decil de seguidores del autor (1 = cuentas más pequeñas) y el tipo de mensaje. Pasa el cursor por cada barra para ver el total",
+  eje: "Mensajes deshumanizadores por cada 1.000", ejeX: "Decil de seguidores", unidad: "de cada 1.000 mensajes deshumanizan",
+  pie: "Ponderado por la probabilidad de pertenecer a la conversación española. Deshumanización: suma de las probabilidades del modelo. Deciles calculados sobre todos los tweets del corpus.<br><span class='credito'>Gráfico: Newtral.es. ▪️ Fuentes: análisis propio a partir de datos de X y los modelos de lenguaje RoBERTuito (Base y Hate Speech).</span>"
+});
+</script></body></html>

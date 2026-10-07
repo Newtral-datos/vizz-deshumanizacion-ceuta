@@ -6,12 +6,12 @@
 <script>
 serieDiaria("#grafico", {
   arriba: "datos/tendencia-deshumanizacion_arriba.csv", abajo: "datos/tendencia-deshumanizacion_abajo.csv", color: "#01f3b3",
-  titulo: "Deshumanización diaria: lo esperado y lo real",
-  subtitulo: "Mensajes deshumanizadores al día, en todos los mensajes. Línea: media de 3 días; línea clara: cada día",
+  titulo: "La <span class='caja caja-verde'>deshumanización</span> aumentó un <span class='caja caja-verde'>165%</span> el 30 de julio",
+  subtitulo: "Mensajes deshumanizadores al día. Línea: media de 3 días; línea clara: mensajes diarios",
   medida: "Estimación deshumanizadores", colorDia: "#a6fbe4", yMundial: 1100,
   tooltip: { "Mensajes deshumanizadores": null, "Odio hacia los inmigrantes": "Odio hacia inmigrantes", "Resto": "Resto de mensajes descargados" }, 
   contenidos: ["Mensajes deshumanizadores", "Odio hacia los inmigrantes", "Sobre migración, sin odio", "Resto"],
   colores: { "Mensajes deshumanizadores": "#01f3b3", "Odio hacia los inmigrantes": "#494949", "Sobre migración, sin odio": "#8c8c8c", "Resto": "#c8c8c8" },
-  pie: "Mensajes deshumanizadores: suma de la probabilidad que da el modelo a cada tweet, ponderada por la probabilidad de pertenecer a la conversación española.<br>Tendencia esperada: número de mensajes según los días previos a la crisis, proyectado sin el posible efecto del Mundial.<br>Barras: tweets al día, ponderados por la misma probabilidad.<br><span class='credito'>Gráfico: Newtral.es. ▪️ Fuentes: análisis propio a partir de datos de X y los modelos de lenguaje RoBERTuito (Base y Hate Speech).</span>"
+  pie: "Mensajes deshumanizadores: suma de la probabilidad que da el modelo a cada tweet, ponderada por la probabilidad de pertenecer a la conversación española.<br>Tendencia esperada: número de mensajes según los días previos a la crisis, proyectado sin el posible efecto del Mundial.<br><span class='credito'>Gráfico: Newtral.es. ▪️ Fuentes: análisis propio a partir de datos de X y los modelos de lenguaje RoBERTuito (Base y Hate Speech).</span>"
 });
 </script></body></html>

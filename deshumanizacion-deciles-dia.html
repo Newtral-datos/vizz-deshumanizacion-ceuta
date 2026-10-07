@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deshumanización al día y seguidores</title><link rel="stylesheet" href="estilo.css"></head>
+<body><div id="grafico"></div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script><script src="js/serie.js"></script><script src="js/deciles-apiladas.js"></script>
+<script>
+decilesApiladas("#grafico", {
+  datos: "datos/deshumanizacion-deciles-dia.csv",
+  partes: { "Tweets propios": "#8c8c8c", "Respuestas": "#01f3b3", "Citas": "#494949" },
+  facetas: ["Antes de la crisis", "Crisis y después"], valor: "al_dia",
+  titulo: "Tras la crisis, la deshumanización crece sobre todo en las cuentas de tamaño medio",
+  subtitulo: "Media de mensajes deshumanizadores al día, según el decil de seguidores del autor (1 las cuentas más pequeñas, 10 las más grandes) y el tipo de mensaje (<span class='caja' style='background:#8c8c8c;border-color:#8c8c8c;color:#fff'>publicación propia</span>, <span class='caja' style='background:#01f3b3;border-color:#01f3b3'>respuesta</span> o <span class='caja' style='background:#494949;border-color:#494949;color:#fff'>cita a otra publicación</span>)",
+  leyenda: false,
+  eje: "Publicaciones deshumanizadoras por día", ejeX: "Decil de seguidores", unidad: "mensajes deshumanizadores al día de media",
+  pie: "Ponderado por la probabilidad de pertenecer a la conversación española. Deshumanización: suma de las probabilidades del modelo.<br><span class='credito'>Gráfico: Newtral.es. ▪️ Fuentes: análisis propio a partir de datos de X y los modelos de lenguaje RoBERTuito (Base y Hate Speech).</span>"
+});
+</script></body></html>

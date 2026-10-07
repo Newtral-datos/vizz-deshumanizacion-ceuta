@@ -28,7 +28,7 @@ async function barrasNivel(sel, cfg) {
     lienzo.selectAll("*").remove();
     const movil = W < 560, fs = movil ? 12 : 13;
     // el panel de abajo es más alto que en la versión de R, sin llegar a repartirse 50/50
-    const hA = movil ? 230 : 320, hB = movil ? 170 : 210, gap = 56, m = { t: 22, r: 10, b: 8, l: movil ? 58 : 66 };
+    const hA = movil ? 230 : 320, hB = movil ? 170 : 210, gap = 96, m = { t: 22, r: 10, b: 8, l: movil ? 58 : 66 };
     const topB = m.t + hA + gap, H = topB + hB + m.b;
     const svg = lienzo.append("svg").attr("width", W).attr("height", H).attr("role", "img").attr("aria-label", cfg.titulo.replace(/<[^>]+>/g, "")).style("font-family", FUENTE);
     const x = d3.scaleBand(momentos, [m.l, W - m.r]).paddingInner(0.55).paddingOuter(0.3);
@@ -48,7 +48,9 @@ async function barrasNivel(sel, cfg) {
     rot(cfg.ejeAbajo, topB + hB / 2, movil ? fs : fs + 2);
 
     // etiquetas de x a medio camino entre los dos paneles
-    momentos.forEach(mo => texto(cfg.etiquetas?.[mo] ?? mo, x(mo) + x.bandwidth() / 2, m.t + hA + gap / 2 + 4, { anchor: "middle" }));
+    momentos.forEach(mo => (cfg.etiquetas?.[mo] ?? mo).split("<br>").forEach((linea, k) =>
+      texto(linea, x(mo) + x.bandwidth() / 2, m.t + hA + 24 + k * (fs + 3), { anchor: "middle" })));
+    texto(cfg.tituloAbajo ?? "", m.l, topB - 10, { size: fs + 2 });
 
     // barra superior y barras apiladas
     momentos.forEach((mo, i) => {
@@ -67,7 +69,7 @@ async function barrasNivel(sel, cfg) {
       svg.append("rect").attr("x", px0).attr("width", ancho).attr("y", m.t).attr("height", topB + hB - m.t).attr("fill", "none").attr("pointer-events", "all")
         .on("pointermove pointerdown", () => {
           sombra.attr("x", px0).attr("width", ancho).attr("opacity", .5);
-          tip.html(`<b>${cfg.etiquetas?.[mo] ?? mo}</b><br><span style="text-decoration:underline solid ${cfg.color};text-decoration-thickness:2px;text-underline-offset:3px">${cfg.medida}</span>: <b>${fmt(valor.get(mo))}</b>` +
+          tip.html(`<b>${(cfg.etiquetas?.[mo] ?? mo).replace("<br>", " ")}</b><br><span style="text-decoration:underline solid ${cfg.color};text-decoration-thickness:2px;text-underline-offset:3px">${cfg.medida}</span>: <b>${fmt(valor.get(mo))}</b>` +
             `<hr>${pilas[i].partes.map(p => `<i style="background:${colores[p.c]}"></i>${cfg.tooltip?.[p.c] ?? p.c}: ${fmt(p.n)}`).join("<br>")}` +
             `<br>Total: <b>${fmt(pilas[i].total)}</b>`).style("opacity", 1);
           const cx = x(mo) + x.bandwidth() / 2, tw = tip.node().offsetWidth;

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Términos sobre inmigración</title><link rel="stylesheet" href="estilo.css"></head>
+<body><div id="tabla" class="serie"></div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script><script src="js/serie.js"></script>
+<script>
+(async () => {
+  const datos = await d3.csv("datos/terminos-inmigracion.csv", d3.autoType);
+  d3.select("#tabla").html(
+    `<h2>Términos sobre inmigración buscados y su número de aparición</h2>` +
+    `<table class="tabla"><thead><tr><th>Término</th><th class="num">Publicaciones</th></tr></thead><tbody>` +
+    datos.map(d => `<tr><td>${d.termino}</td><td class="num">${fmt(d.tweets)}</td></tr>`).join("") +
+    `</tbody></table>` +
+    `<p class="pie">Una publicación con varios términos cuenta en cada uno. Se busca cada término como palabra completa, sin distinguir mayúsculas ni tildes y sin tener en cuenta enlaces ni nombres de usuarios.` +
+    `<br><span class='credito'>Tabla: Newtral.es. ▪️ Fuentes: análisis propio a partir de datos de X.</span></p>`);
+})();
+</script></body></html>

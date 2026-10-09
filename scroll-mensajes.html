@@ -62,14 +62,14 @@ SECUENCIA.forEach(s=>{
 });
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target)}}),{root:pantalla,threshold:.2});
 lista.querySelectorAll(".msg,.bloque").forEach(e=>io.observe(e));
-const movil=document.getElementById("movil"),titular=document.getElementById("titular");let apagado=false;
+const movil=document.getElementById("movil");let apagado=false;
 pantalla.addEventListener("scroll",()=>{
   pista.style.opacity=pantalla.scrollTop>40?0:1;
   if(!apagado&&pantalla.scrollTop+pantalla.clientHeight>=pantalla.scrollHeight-4){
     apagado=true;pantalla.style.overflow="hidden";
     setTimeout(()=>{movil.classList.add("apagando")},350);
     setTimeout(()=>{movil.classList.add("fuera")},1500);
-    setTimeout(()=>{movil.style.display="none";titular.style.display="block";requestAnimationFrame(()=>requestAnimationFrame(()=>titular.classList.add("visible")));parent.postMessage("scroll-ceuta-fin","*")},2250);
+    setTimeout(()=>{movil.style.display="none";parent.postMessage("scroll-ceuta-fin","*")},2250);
   }
 },{passive:true});
 </script></body></html>

@@ -32,6 +32,11 @@ body{margin:0;padding:16px;font:14px/1.4 "Helvetica Neue",Helvetica,Arial,sans-s
 .titular{display:none;max-width:760px;margin:0 auto;text-align:center;font:600 clamp(1.6rem,4.4vw,2.7rem)/1.2 "Helvetica Neue",Helvetica,Arial,sans-serif;color:#3a3a3a;letter-spacing:-.01em;opacity:0;transform:translateY(16px);transition:opacity .9s ease,transform .9s ease}
 .titular.visible{opacity:1;transform:none}
 .titular .sub{text-decoration:underline;text-decoration-color:#01f3b3;text-decoration-thickness:.13em;text-underline-offset:.14em;text-decoration-skip-ink:none}
+html,body{height:100%}
+body{padding:0}
+.scroll{padding:0;height:100%}
+.escena{min-height:0;height:100%}
+.movil{height:min(620px,calc(100% - 40px))}
 </style></head>
 <body><div class="scroll">
 <div class="escena"><div class="movil" id="movil"><div class="pantalla" id="pantalla"><div class="espacio"></div><div id="lista"></div><div class="fin"></div></div><div class="apagado"></div>
@@ -64,7 +69,7 @@ pantalla.addEventListener("scroll",()=>{
     apagado=true;pantalla.style.overflow="hidden";
     setTimeout(()=>{movil.classList.add("apagando")},350);
     setTimeout(()=>{movil.classList.add("fuera")},1500);
-    setTimeout(()=>{movil.style.display="none";titular.style.display="block";requestAnimationFrame(()=>requestAnimationFrame(()=>titular.classList.add("visible")))},2250);
+    setTimeout(()=>{movil.style.display="none";titular.style.display="block";requestAnimationFrame(()=>requestAnimationFrame(()=>titular.classList.add("visible")));parent.postMessage("scroll-ceuta-fin","*")},2250);
   }
 },{passive:true});
 </script></body></html>

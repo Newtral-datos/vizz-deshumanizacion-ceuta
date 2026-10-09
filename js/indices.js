@@ -32,7 +32,7 @@ async function indicesDiarios(sel, cfg) {
     svg.append("rect").attr("x", mx0).attr("width", mx1 - mx0).attr("y", m.t).attr("height", hA).attr("fill", GRIS.fondo).attr("opacity", .7);
     svg.append("line").attr("x1", x(crisis)).attr("x2", x(crisis)).attr("y1", m.t).attr("y2", m.t + hA).attr("stroke", GRIS.oscuro).attr("stroke-dasharray", "5 4");
     texto(svg, "Mundial", (mx0 + mx1) / 2, y(cfg.yMundial ?? y.domain()[1] * 0.93) + 4, { color: GRIS.medio, anchor: "middle", size: fs + 2 });
-    texto(svg, "Crisis de Ceuta", 0, 0, { anchor: "end" }).attr("transform", `translate(${x(crisis) - 11},${m.t + 40}) rotate(-90)`);
+    texto(svg, "30 de julio", 0, 0, { anchor: "end" }).attr("transform", `translate(${x(crisis) - 11},${m.t + 40}) rotate(-90)`);
 
     // ejes
     svg.append("g").attr("transform", `translate(0,${m.t + hA})`)

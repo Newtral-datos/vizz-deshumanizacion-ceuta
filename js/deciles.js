@@ -51,17 +51,17 @@ async function decilesFacetas(sel, cfg) {
       // la deshumanización se dibuja la última, para que quede por encima
       grupos.map((k, j) => j).sort((a, b) => (grupos[a] === "Deshumanizan") - (grupos[b] === "Deshumanizan")).forEach(j => {
         g.append("path").attr("fill", "none").attr("stroke", cfg.series[grupos[j]]).attr("stroke-width", 3).attr("stroke-linejoin", "round").attr("d", linea(serie[j]));
-        serie[j].forEach(d => g.append("circle").attr("cx", xd(d.decil_seguidores)).attr("cy", y(d[v])).attr("r", 4).attr("fill", "#fff")
-          .attr("stroke", cfg.series[grupos[j]]).attr("stroke-width", 2));
       });
 
       // interacción: guía en el decil más cercano y tooltip con las series de esa faceta
       const guia = g.append("line").attr("y1", 0).attr("y2", hP).attr("stroke", "#494949").attr("opacity", 0);
+      const puntos = grupos.map(k => g.append("circle").attr("r", 4).attr("fill", "#fff").attr("stroke", cfg.series[k]).attr("stroke-width", 2).attr("opacity", 0));
       const mostrar = ev => {
         const px = d3.pointer(ev, g.node())[0];
         const dec = d3.least(xd.domain(), d => Math.abs(xd(d) - px));
         const filas = grupos.map((k, j) => ({ k, d: serie[j].find(s => s.decil_seguidores === dec) })).filter(f => f.d)
           .sort((a, b) => b.d[v] - a.d[v]);
+        puntos.forEach((c, j) => { const d = serie[j].find(s => s.decil_seguidores === dec); c.attr("opacity", d ? 1 : 0); if (d) c.attr("cx", xd(dec)).attr("cy", y(d[v])); });
         guia.attr("x1", xd(dec)).attr("x2", xd(dec)).attr("opacity", .8);
         tip.html(`<b>${etapa}. Decil ${dec}</b>` + filas.map(f => `<br><span style="${sub(cfg.series[f.k])}">${cfg.nombres?.[f.k] ?? f.k}</span>: <b>${fmt(f.d[v])}</b>`).join(""))
           .style("opacity", 1);
@@ -69,7 +69,7 @@ async function decilesFacetas(sel, cfg) {
         tip.style("left", Math.max(0, ax + 10 + tw > W ? ax - 10 - tw : ax + 10) + "px").style("top", (oy + tit + 10) + "px");
       };
       g.append("rect").attr("width", wP).attr("height", hP).attr("fill", "none").attr("pointer-events", "all")
-        .on("pointermove", mostrar).on("pointerdown", mostrar).on("pointerleave", () => { guia.attr("opacity", 0); tip.style("opacity", 0); });
+        .on("pointermove", mostrar).on("pointerdown", mostrar).on("pointerleave", () => { guia.attr("opacity", 0); puntos.forEach(c => c.attr("opacity", 0)); tip.style("opacity", 0); });
     });
     const alto = movil ? n * (tit + hP + pie) : tit + hP + pie;
     svg.append("text").attr("transform", `translate(14,${m.t + (movil ? alto / 2 : tit + hP / 2)}) rotate(-90)`).attr("text-anchor", "middle")

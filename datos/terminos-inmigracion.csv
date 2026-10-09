@@ -1,58 +1,25 @@
-termino,tweets
-extranjeros,66439
-inmigrantes,49109
-extranjero,44606
-latina,40884
-marroquí,39781
-marroquíes,35377
-migrantes,30879
-musulmanes,29361
-moros,26959
-moro,25617
-latino,25468
-africanos,22928
-árabe,19949
-mohamed,18251
-africano,14092
-árabes,12961
-irregular,12684
-morita,12675
-musulman,12570
-inmigrante,9655
-mena,9395
-menas,9391
-africana,7539
-irregulares,6132
-panchito,5688
-migrante,5359
-muhammad,4590
-marroquis,4006
-islamistas,3202
-africanas,3032
-islamista,2935
-mohammed,2752
-patera,2355
-magrebíes,2253
-indígena,1941
-magrebí,1932
-subsaharianos,1609
-pateras,1498
-morito,1112
-moritos,944
-panchita,866
-sin papeles,669
-cayuco,440
-subsahariano,370
-cayucos,276
-jovenlandeses,111
-moritas,110
-machupichu,107
-mojamed,75
-jovenlandés,63
-moracos,60
-marroki,41
-moraco,41
-harraga,19
-harragas,3
-calluco,0
-callucos,0
+familia,variantes,tweets
+extranjero,extranjero · extranjeros,109502
+latino,latino · latina · latinos · latinas,94192
+marroquí,marroquí · marroquíes · marroquis · marroki,76742
+moro,moro · moros · morito · moritos · morita · moritas · moraco · moracos,66884
+inmigrante,inmigrante · inmigrantes,58145
+africano,africano · africanos · africana · africanas,46442
+musulmán,musulman · musulmanes,41181
+migrante,migrante · migrantes,35738
+árabe,árabe · árabes,32329
+mohamed,mohamed · mohammed · muhammad · mojamed,25628
+irregular,irregular · irregulares,18651
+mena,mena · menas,18594
+panchito,panchito · panchita · panchitos · panchitas,10134
+islamista,islamista · islamistas,6059
+magrebí,magrebí · magrebíes · magrebis,4359
+patera,patera · pateras,3821
+subsahariano,subsahariano · subsaharianos,1974
+indígena,indígena,1941
+cayuco,cayuco · cayucos,713
+sin papeles,sin papeles,669
+jovenlandés,jovenlandés · jovenlandeses,172
+machupichu,machupichu,107
+harraga,harraga · harragas,22
+calluco,calluco · callucos,0

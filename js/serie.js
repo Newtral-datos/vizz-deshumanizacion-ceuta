@@ -35,7 +35,7 @@ async function serieDiaria(sel, cfg) {
   function dibujar(W) {
     lienzo.selectAll("*").remove();
     const movil = W < 560, fs = movil ? 12 : 13;
-    const hA = movil ? 280 : 400, hB = movil ? 130 : 160, gap = 34;
+    const hA = movil ? 280 : 400, hB = movil ? 130 : 160, gap = 66;
     const m = { t: 8, r: 10, b: 26, l: movil ? 58 : 66 }, H = m.t + hA + gap + hB + m.b;
     const svg = lienzo.append("svg").attr("width", W).attr("height", H).attr("role", "img").attr("aria-label", cfg.titulo).style("font-family", FUENTE);
     const x0 = dia("2026-06-29"), x1 = dia("2026-08-29");
@@ -57,8 +57,10 @@ async function serieDiaria(sel, cfg) {
     });
     const mx = (x(dia(MUNDIAL[0])) + x(dia(MUNDIAL[1]))) / 2;
     texto(svg, "Mundial", mx, yA(cfg.yMundial ?? yA.domain()[1] * 0.89) + 4, { color: GRIS.medio, anchor: "middle", size: fs + 2 });
-    texto(svg, "Crisis de Ceuta", 0, 0, { anchor: "end" }).attr("transform", `translate(${x(crisis) - 11},${m.t + 40}) rotate(-90)`);
-    texto(svg, "Total de publicaciones analizadas cada día:", m.l, topB - 10, { size: fs + 2 });
+    texto(svg, "30 de julio", 0, 0, { anchor: "end" }).attr("transform", `translate(${x(crisis) - 11},${m.t + 40}) rotate(-90)`);
+    texto(svg, "Total de publicaciones analizadas cada día:", m.l, topB - 38, { size: fs + 2 });
+    lienzo.append("div").attr("class", "leyenda leyenda-panel").style("top", (topB - 28) + "px").style("left", m.l + "px")
+      .html(contenidos.map(c => `<span><i style="background:${colores[c]}"></i>${cfg.tooltip?.[c] ?? c}</span>`).join(""));
 
     // eje x: una marca por semana (cada dos en pantallas estrechas)
     const ticks = d3.utcMonday.every(movil ? 2 : 1).range(x0, x1);

@@ -13,8 +13,7 @@ async function barrasNivel(sel, cfg) {
   });
 
   const cont = d3.select(sel).classed("serie", true);
-  cont.html(`<h2>${cfg.titulo}</h2><p class="sub">${cfg.subtitulo}</p><div class="lienzo"></div><div class="leyenda">` +
-    contenidos.map(c => `<span><i style="background:${colores[c]}"></i>${c}</span>`).join("") + `</div><p class="pie">${cfg.pie}</p>`);
+  cont.html(`<h2>${cfg.titulo}</h2><p class="sub">${cfg.subtitulo}</p><div class="lienzo"></div><p class="pie">${cfg.pie}</p>`);
   const lienzo = cont.select(".lienzo");
   let ancho = 0;
   const redibujar = () => {
@@ -28,7 +27,7 @@ async function barrasNivel(sel, cfg) {
     lienzo.selectAll("*").remove();
     const movil = W < 560, fs = movil ? 12 : 13;
     // el panel de abajo es más alto que en la versión de R, sin llegar a repartirse 50/50
-    const hA = movil ? 230 : 320, hB = movil ? 170 : 210, gap = 96, m = { t: 22, r: 10, b: 8, l: movil ? 58 : 66 };
+    const hA = movil ? 230 : 320, hB = movil ? 170 : 210, gap = 124, m = { t: 22, r: 10, b: 8, l: movil ? 58 : 66 };
     const topB = m.t + hA + gap, H = topB + hB + m.b;
     const svg = lienzo.append("svg").attr("width", W).attr("height", H).attr("role", "img").attr("aria-label", cfg.titulo.replace(/<[^>]+>/g, "")).style("font-family", FUENTE);
     const x = d3.scaleBand(momentos, [m.l, W - m.r]).paddingInner(0.55).paddingOuter(0.3);
@@ -50,7 +49,9 @@ async function barrasNivel(sel, cfg) {
     // etiquetas de x a medio camino entre los dos paneles
     momentos.forEach(mo => (cfg.etiquetas?.[mo] ?? mo).split("<br>").forEach((linea, k) =>
       texto(linea, x(mo) + x.bandwidth() / 2, m.t + hA + 24 + k * (fs + 3), { anchor: "middle" })));
-    texto(cfg.tituloAbajo ?? "", m.l, topB - 10, { size: fs + 2 });
+    texto(cfg.tituloAbajo ?? "", m.l, topB - 38, { size: fs + 2 });
+    lienzo.append("div").attr("class", "leyenda leyenda-panel").style("top", (topB - 28) + "px").style("left", m.l + "px")
+      .html(contenidos.map(c => `<span><i style="background:${colores[c]}"></i>${c}</span>`).join(""));
 
     // barra superior y barras apiladas
     momentos.forEach((mo, i) => {

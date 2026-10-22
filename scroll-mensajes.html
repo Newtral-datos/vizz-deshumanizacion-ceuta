@@ -1,70 +1,128 @@
-<!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mensajes deshumanizadores: scroll</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;padding:16px;font:14px/1.4 "Helvetica Neue",Helvetica,Arial,sans-serif;color:#3a3a3a;background:#fff}
-.scroll{max-width:900px;margin:auto;display:flex;flex-direction:column;align-items:center;padding:30px 0}
-.movil{position:relative;width:320px;height:620px;background:#000;border-radius:44px;padding:12px;border:3px solid #1f2b27;box-shadow:0 0 50px 6px rgba(1,243,179,.22),0 10px 30px rgba(1,243,179,.12)}
-.movil:before{content:"";position:absolute;top:18px;left:50%;transform:translateX(-50%);width:84px;height:22px;background:#000;border-radius:14px;z-index:3;box-shadow:0 0 0 2px #151515}
-.pantalla{position:relative;height:100%;border-radius:32px;overflow-y:auto;overflow-x:hidden;background:#000;color:#fff;padding:0 18px 160px;scrollbar-width:none;overscroll-behavior:contain}
-.pantalla::-webkit-scrollbar{display:none}
-.espacio{height:520px}
-.bloque,.msg{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
-.visible{opacity:1!important;transform:none!important}
-.bloque{margin:30px 0;font-size:1.3rem;line-height:1.75;font-weight:600}
-.bloque .caja{background:#01f3b3;color:#3a3a3a;padding:0 .25em;border:4px solid #01f3b3;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
-.msg{border-bottom:1px solid #2a2a2a;padding:18px 0}
-.msg .fecha{font-size:.72rem;color:#8c8c8c;margin:0 0 6px;letter-spacing:.02em}
-.msg .texto{font-style:italic;font-size:.98rem;line-height:1.4;margin:0 0 10px}
-.msg .metr{display:flex;gap:16px;font-size:.78rem;color:#bfbfbf}
-.msg .metr .corazon{color:#01f3b3}
-.pista{position:absolute;left:12px;right:12px;bottom:12px;height:90px;pointer-events:none;background:linear-gradient(transparent,#000 70%);border-radius:0 0 32px 32px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:20px;font-size:1.15rem;font-weight:600;color:#fff;z-index:2;transition:opacity .5s}
-.pista span{display:block;color:#01f3b3;font-size:1.3rem;animation:bota 1.4s ease-in-out infinite}
-@keyframes bota{50%{transform:translateY(5px)}}
-.fin{height:560px}
-.apagado{position:absolute;inset:12px;border-radius:32px;background:#fff;opacity:0;pointer-events:none;z-index:4}
-.movil.apagando .apagado{animation:apagar 1s ease-in forwards}
-@keyframes apagar{0%{opacity:0;transform:scale(1,1)}12%{opacity:.85;transform:scale(1,1)}55%{opacity:1;transform:scale(1,.012)}85%{opacity:1;transform:scale(.015,.012)}100%{opacity:0;transform:scale(0,0)}}
-.movil{transition:opacity .7s ease,transform .7s ease}
-.movil.fuera{opacity:0;transform:scale(.92)}
-.escena{width:100%;display:flex;align-items:center;justify-content:center;min-height:700px}
-.titular{display:none;max-width:760px;margin:0 auto;text-align:center;font:600 clamp(1.6rem,4.4vw,2.7rem)/1.2 "Helvetica Neue",Helvetica,Arial,sans-serif;color:#3a3a3a;letter-spacing:-.01em;opacity:0;transform:translateY(16px);transition:opacity .9s ease,transform .9s ease}
-.titular.visible{opacity:1;transform:none}
-.titular .sub{text-decoration:underline;text-decoration-color:#01f3b3;text-decoration-thickness:.13em;text-underline-offset:.14em;text-decoration-skip-ink:none}
-</style></head>
-<body><div class="scroll">
-<div class="escena"><div class="movil" id="movil"><div class="pantalla" id="pantalla"><div class="espacio"></div><div id="lista"></div><div class="fin"></div></div><div class="apagado"></div>
-<div class="pista" id="pista">Desliza<span>&#9660;</span></div></div>
-<h1 class="titular" id="titular"><span class="sub">Investigación</span> | Así ha aumentando la <span class="sub">deshumanización</span> de inmigrantes en <span class="sub">redes sociales</span> tras la crisis de <span class="sub">Ceuta</span></h1></div>
+.nota-metodologica-container {
+  margin: 20px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.nota-metodologica-header {
+  background-color: rgba(1, 243, 179, 0.85);
+  padding: 15px 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  transition: opacity 0.3s ease;
+}
+
+.nota-metodologica-header:hover {
+  opacity: 0.9;
+}
+
+.nota-metodologica-titulo {
+  font-weight: bold;
+  font-style: italic;
+  color: #000;
+  margin: 0;
+  font-size: 16px;
+}
+
+.nota-metodologica-triangulo {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid #000;
+  transition: transform 0.3s ease;
+}
+
+.nota-metodologica-triangulo.abierto {
+  transform: rotate(180deg);
+}
+
+.nota-metodologica-contenido {
+  background-color: rgba(1, 243, 179, 0.05);
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  border-radius: 0 0 5px 5px;
+}
+
+.nota-metodologica-contenido.abierto {
+  padding: 20px;
+  max-height: 2000px; /* Incrementado para asegurar la visibilidad de todo el texto largo */
+}
+
+.nota-metodologica-texto {
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.nota-metodologica-texto p {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.nota-metodologica-texto ul {
+  margin: 0 0 12px 20px;
+  padding: 0;
+}
+
+.nota-metodologica-texto li {
+  margin-bottom: 6px;
+}
+</style>
+
+<div class="nota-metodologica-container">
+  <div class="nota-metodologica-header" onclick="toggleNotaMetodologica()">
+    <p class="nota-metodologica-titulo">Nota metodológica</p>
+    <div class="nota-metodologica-triangulo" id="triangulo"></div>
+  </div>
+  <div class="nota-metodologica-contenido" id="contenido">
+    <div class="nota-metodologica-texto">
+      <p>Para llevar a cabo esta investigación se han analizado 2,5 millones de mensajes publicados en X entre el 30 de junio y el 29 de agosto de 2026: 30 días anteriores a la crisis de Ceuta, el 30 de julio y los 30 días posteriores. La selección de mensajes se ha hecho partiendo de una lista con 188 términos relacionados con Ceuta y la inmigración (como “Ceuta”, “frontera” o “migrante”) junto a otros típicamente usados para deshumanizar (como “rata”, “plaga” o “mono”, o los emoticonos correspondientes), buscando cualquier publicación en español que contuviese al menos uno de dichos términos.</p>
+
+      <ul>
+        <li>Ojo. Esta investigación analiza un periodo concreto de dos meses. Por ello, aunque el aumento de deshumanización tras la crisis parece claro y ha sido detectado por otras fuentes como el Oberaxe, las conclusiones son preliminares y deberían ser complementadas con estudios más completos.</li>
+        <li>Asimismo, como la descarga de mensajes comenzó el 7 de septiembre, se pueden haber perdido mensajes publicados dentro del periodo de análisis pero que fueron eliminados por X o por sus autores.</li>
+      </ul>
+
+      <p>Como la mayoría de los términos incorporados a dicha lista son empleados también en otros países de habla hispana («frontera», «policía», etc.), se ha creado una variable que asigna a cada usuario una probabilidad de pertenecer al debate público español que va de 0 a 1 (p_es). Esta variable se ha usado como peso de los mensajes. Es decir, si una publicación tiene una p_es de 0,2, dicho mensaje cuenta en los cálculos como si fuesen 0,2 mensajes en lugar de una publicación completa. Por tanto, aunque en el análisis se han incluido mensajes que tienen poco que ver con la crisis de Ceuta, su importancia en el análisis es baja.</p>
+
+      <p>Esta variable se ha creado teniendo en cuenta pistas como la ubicación declarada por los usuarios, la presencia de banderas en su nombre de usuario, los temas de los que habla, el vocabulario usado o las cuentas con las que interactúa. La distribución final de las cuentas es:</p>
+
+      <ul>
+        <li><strong>p_es ≥ 0,8</strong> (esfera española clara): 26,1% de cuentas y 40,2% de mensajes</li>
+        <li><strong>p_es = 0,5</strong> (sin pistas sobre el origen): 12,0% de cuentas y 3,1% de mensajes</li>
+        <li><strong>p_es ≤ 0,2</strong> (esfera no española): 29,2% de cuentas y 34,6% de mensajes</li>
+      </ul>
+
+      <p>Se han clasificado como deshumanizadores aquellos mensajes que cumplían los siguientes requisitos: 1) hablan explícita o implícitamente sobre migrantes, grupos racializados o religiosos y 2) comparan estos grupos con animales o entidades no humanas (“plagas”, “parásitos”, “enfermedades”, “monstruos”, etc.) o referirse al grupo, no a individuos o acciones concretas, como “salvajes”.</p>
+
+      <ul>
+        <li>Se trata de una definición estricta de deshumanización de tipo metáfora, en la que no se han incluido los mensajes de denuncia (“llamar ratas a los inmigrantes es racista”), la criminalización de los grupos (“violadores”), las metáforas de masa (“invasión”, “avalancha”) o la negación de rasgos humanos.</li>
+        <li>La hostilidad hacia los inmigrantes se mide de forma independiente, como discurso de odio, a partir de la clasificación ya existente llevada a cabo por el modelo de lenguaje RoBERTuito Hate Speech (el mensaje es odio si el modelo le da una probabilidad > 0,5).</li>
+      </ul>
+
+      <p>Como revisar millones de mensajes de forma manual no es viable, se probaron diferentes estrategias para ver cuál era más precisa en la detección de deshumanización. Entre ellas se sitúan la asociación directa de términos (un mensaje es deshumanizador si aparece un término referido a un animal y a los migrantes), la clasificación genérica de odio de RoBERTuito Hate Speech, un modelo estadístico sencillo o uno de análisis textual entrenado para el caso concreto. Este último fue el sistema elegido al combinar una de las tasas de detección de deshumanización más altas junto a un nivel bajo de falsos positivos, aunque se trata de un modelo conservador con la clasificación.</p>
+
+      <p>Para el proceso de entrenamiento, se clasificó de forma manual una muestra de más de 5.300 mensajes. Unos 3.000 fueron usados para entrenar el modelo de análisis textual y los otros 2.300 para comprobar la fiabilidad de la clasificación. En ellas se sobrerrepresentó la presencia de mensajes deshumanizadores debido a su escasa presencia.</p>
+
+      <p>La muestra de entrenamiento se usó para adaptar el modelo RoBERTuito a la detección de deshumanización según la definición expuesta anteriormente. Se seleccionó este modelo concreto por estar ya especializado en el análisis de mensajes de X publicados en español.</p>
+
+      <p>Después de ajustar el modelo para optimizar los resultados, se analizaron con él los 2,5 millones de publicaciones de la base de datos completa, asignando a cada mensaje una probabilidad entre 0 y 1 de ser deshumanizador. Las cifras mostradas en los análisis son la suma de estas probabilidades. Es decir, no se trata de un recuento directo de mensajes deshumanizadores, sino de una estimación corregida que tiene en cuenta el margen de error del modelo.</p>
+    </div>
+  </div>
 </div>
+
 <script>
-const SECUENCIA=[{"k": "b", "h": "En el mes previo a la crisis de Ceuta se publicaron una media de <span class=\"caja\">348 mensajes</span> diarios en X donde <span class=\"caja\">se deshumanizaba a los inmigrantes</span>, tratándoles como si fuesen animales"}, {"k": "m", "f": "30 jun 2026", "t": "Los panchitos no son aptos para vivir en civilización y aunque muchos no estaréis de acuerdo, no saben respetar el silencio y las normas, tienen más desarrollado el instinto animal, son sucios y salvajes, sólo saben pedir y que les sirvan, su CI es 60/70", "l": 684, "c": 73}, {"k": "m", "t": "Otro de los casos aislados de los monos de la selva en libertad. Te joden tu negocio te lo destrozan y mañana volverán a hacer lo mismo en otro lugar. Importas selva, obtienes salvajes.", "f": "8 jul 2026", "l": 318, "c": 121}, {"k": "m", "t": "Hay que exterminarlos,no queda más remedio y el que quiera convivir con estas ratas que se vaya pa África.", "f": "17 jul 2026", "l": 192, "c": 3}, {"k": "m", "t": "Ni las cucarachas de Ceuta quieren ser marroquíes", "f": "30 jul 2026", "l": 11, "c": 0}, {"k": "b", "h": "El <span class=\"caja\">30 de julio</span>, mientras se producía la entrada masiva de migrantes en Ceuta, la deshumanización aumentó un <span class=\"caja\">255%</span> con respecto a los días previos"}, {"k": "m", "t": "Estos hijos de puta han llenado Ceuta de subhumanos, bestias y violadores más calientes que los frenos de un tren y todavía tienen los huevos de decir que se respira absoluta normalidad.", "f": "13 ago 2026", "l": 107, "c": 20}, {"k": "m", "t": "Le paso a mi hermana un inocente meme de una cucaracha en una boya que pone: \"Ahora también saben bucear\". Y mi consanguínea suelta: \"Es un marroquí agarrado a las boyas de Pedro Sánchez\". La quiero muchísimo.", "f": "21 ago 2026", "l": 6, "c": 1}, {"k": "b", "h": "Aunque este tipo de mensajes se redujeron en agosto, continuaron siendo más comunes que antes de la entrada masiva."}, {"k": "b", "h": "Cada día, se publicaron unos <span class=\"caja\">70 mensajes deshumanizadores más</span> que durante el mes anterior."}];
-const lista=document.getElementById("lista"),pantalla=document.getElementById("pantalla"),pista=document.getElementById("pista");
-const num=n=>n.toLocaleString("es-ES");
-SECUENCIA.forEach(s=>{
-  const e=document.createElement("div");
-  if(s.k==="b"){e.className="bloque";e.innerHTML=s.h}
-  else{
-    e.className="msg";
-    const f=document.createElement("p");f.className="fecha";f.textContent=s.f;
-    const t=document.createElement("p");t.className="texto";t.textContent=s.t;
-    const x=document.createElement("div");x.className="metr";
-    x.innerHTML='<span><span class="corazon">♥</span> '+num(s.l)+'</span><span>Compartidos: '+num(s.c)+'</span>';
-    e.append(f,t,x);
-  }
-  lista.append(e);
-});
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target)}}),{root:pantalla,threshold:.2});
-lista.querySelectorAll(".msg,.bloque").forEach(e=>io.observe(e));
-const movil=document.getElementById("movil"),titular=document.getElementById("titular");let apagado=false;
-pantalla.addEventListener("scroll",()=>{
-  pista.style.opacity=pantalla.scrollTop>40?0:1;
-  if(!apagado&&pantalla.scrollTop+pantalla.clientHeight>=pantalla.scrollHeight-4){
-    apagado=true;pantalla.style.overflow="hidden";
-    setTimeout(()=>{movil.classList.add("apagando")},350);
-    setTimeout(()=>{movil.classList.add("fuera")},1500);
-    setTimeout(()=>{movil.style.display="none";titular.style.display="block";requestAnimationFrame(()=>requestAnimationFrame(()=>titular.classList.add("visible")))},2250);
-  }
-},{passive:true});
-</script></body></html>
+function toggleNotaMetodologica() {
+  const contenido = document.getElementById('contenido');
+  const triangulo = document.getElementById('triangulo');
+
+  contenido.classList.toggle('abierto');
+  triangulo.classList.toggle('abierto');
+}
+</script>

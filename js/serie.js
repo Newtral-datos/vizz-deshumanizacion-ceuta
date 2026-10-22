@@ -17,7 +17,9 @@ async function serieDiaria(sel, cfg) {
   const apilado = d3.rollups(aba, v => v, d => +d.dia).map(([t, v]) => {
     let y = 0;
     const o = { dia: new Date(t), partes: [], total: d3.sum(v, d => d.tweets) };
-    contenidos.forEach(c => { const n = v.find(d => d.contenido === c)?.tweets ?? 0; o.partes.push({ c, n, y0: y, y1: y += n }); });
+    // cfg.fusionar: { categoría origen: categoría destino } suma categorías del CSV en una sola
+    const dest = d => cfg.fusionar?.[d.contenido] ?? d.contenido;
+    contenidos.forEach(c => { const n = d3.sum(v.filter(d => dest(d) === c), d => d.tweets); o.partes.push({ c, n, y0: y, y1: y += n }); });
     return o;
   });
 

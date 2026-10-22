@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Interactivos</title>
+<style>
+body{margin:0;padding:16px;font:14px/1.4 "Helvetica Neue",Helvetica,Arial,sans-serif;color:#3a3a3a;background:#fff}
+main{max-width:900px;margin:auto}
+h1{font-size:1.25rem}
+li{margin:0 0 10px}
+a{color:#3a3a3a;font-weight:bold}
+code{display:block;color:#8c8c8c;font-size:.75rem;word-break:break-all}
+</style></head>
+<body><main>
+<h1>Interactivos</h1>
+<ul id="lista"></ul>
+<script>
+const graficos = [
+  ["Deshumanización diaria", "tendencia-deshumanizacion.html"],
+  ["Deshumanización y Mundial", "tendencia-deshumanizacion-mundial.html"],
+  ["Odio diario", "tendencia-odio.html"],
+  ["Nivel de deshumanización (antes, día y después de la crisis)", "evolucion-mensajes.html"],
+  ["Deshumanización por origen de la cuenta", "deshumanizacion-esferas.html"],
+  ["Odio y deshumanización (índices)", "indices-deshumanizacion-odio.html"],
+  ["Deshumanización y seguidores, por tipo de mensaje", "deshumanizacion-deciles-tipo.html"],
+  ["Deshumanización al día y seguidores", "deshumanizacion-deciles-dia.html"],
+  ["Odio y seguidores", "engagement-deciles-seguidores.html"],
+  ["Términos sobre inmigración", "terminos-inmigracion.html"],
+  ["Mensajes deshumanizadores (scroll)", "scroll-mensajes.html"]
+];
+// la URL completa se calcula desde donde esté publicada la carpeta
+document.getElementById("lista").innerHTML = graficos.map(([t, f]) =>
+  `<li><a href="${f}">${t}</a><code>${new URL(f, location.href).href}</code></li>`).join("");
+</script>
+</main></body></html>

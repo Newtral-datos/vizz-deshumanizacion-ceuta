@@ -40,9 +40,9 @@ async function serieDiaria(sel, cfg) {
     const hA = movil ? 280 : 400, hB = movil ? 130 : 160, gap = 66;
     const m = { t: 8, r: 10, b: 26, l: movil ? 58 : 66 }, H = m.t + hA + gap + hB + m.b;
     const svg = lienzo.append("svg").attr("width", W).attr("height", H).attr("role", "img").attr("aria-label", cfg.titulo).style("font-family", FUENTE);
-    const x0 = dia("2026-06-29"), x1 = dia("2026-08-29");
+    const [x0, x1] = (cfg.rango ?? ["2026-06-29", "2026-08-29"]).map(dia);
     const x = d3.scaleUtc([x0, x1], [m.l, W - m.r]);
-    const yA = d3.scaleLinear([0, d3.max(arr, d => Math.max(d.n_est, d.esperado_sup_m ?? 0)) * 1.08], [m.t + hA, m.t]);
+    const yA = d3.scaleLinear([0, d3.max(arr, d => Math.max(d.n_est, cfg.sinEsperado ? 0 : d.esperado_sup_m ?? 0)) * 1.08], [m.t + hA, m.t]);
     const topB = m.t + hA + gap;
     const yB = d3.scaleLinear([0, d3.max(apilado, d => d.total) * 1.05], [topB + hB, topB]);
     const crisis = dia(CRISIS), post = arr.filter(d => d.dia >= crisis);
@@ -54,12 +54,12 @@ async function serieDiaria(sel, cfg) {
     [[m.t, hA], [topB, hB]].forEach(([y, h]) => {
       svg.append("rect").attr("x", x(dia(MUNDIAL[0]))).attr("width", x(dia(MUNDIAL[1])) - x(dia(MUNDIAL[0])))
         .attr("y", y).attr("height", h).attr("fill", GRIS.fondo).attr("opacity", .7);
-      svg.append("line").attr("x1", x(crisis)).attr("x2", x(crisis)).attr("y1", y).attr("y2", y + h)
+      if (!cfg.sinCrisis) svg.append("line").attr("x1", x(crisis)).attr("x2", x(crisis)).attr("y1", y).attr("y2", y + h)
         .attr("stroke", GRIS.oscuro).attr("stroke-dasharray", "5 4");
     });
     const mx = (x(dia(MUNDIAL[0])) + x(dia(MUNDIAL[1]))) / 2;
     texto(svg, "Mundial", mx, yA(cfg.yMundial ?? yA.domain()[1] * 0.89) + 4, { color: GRIS.medio, anchor: "middle", size: fs + 2 });
-    texto(svg, "30 de julio", 0, 0, { anchor: "end" }).attr("transform", `translate(${x(crisis) - 11},${m.t + 40}) rotate(-90)`);
+    if (!cfg.sinCrisis) texto(svg, "30 de julio", 0, 0, { anchor: "end" }).attr("transform", `translate(${x(crisis) - 11},${m.t + 40}) rotate(-90)`);
     texto(svg, "Total de publicaciones analizadas cada día:", m.l, topB - 38, { size: fs + 2 });
     lienzo.append("div").attr("class", "leyenda leyenda-panel").style("top", (topB - 28) + "px").style("left", m.l + "px")
       .html(contenidos.map(c => `<span><i style="background:${colores[c]}"></i>${cfg.tooltip?.[c] ?? c}</span>`).join(""));
@@ -82,12 +82,14 @@ async function serieDiaria(sel, cfg) {
       .attr("font-size", fs + 3).attr("fill", GRIS.oscuro).text("Publicaciones por día");
 
     // tendencia esperada (banda + línea)
+    if (!cfg.sinEsperado) {
     svg.append("path").attr("fill", GRIS.fondo)
       .attr("d", d3.area().x(d => x(d.dia)).y0(d => yA(d.esperado_inf_m)).y1(d => yA(d.esperado_sup_m))(post));
     svg.append("path").attr("fill", "none").attr("stroke", GRIS.oscuro).attr("stroke-dasharray", "5 4")
       .attr("d", d3.line().x(d => x(d.dia)).y(d => yA(d.esperado_m))(post));
     const tx = x(d3.utcDay.round(new Date((+x.invert((m.l + W - m.r) / 2) + +x1) / 2))), te = post.find(d => +d3.utcDay.round(x.invert(tx)) === +d.dia) ?? post.at(-1);
     texto(svg, "Tendencia esperada", tx, yA(te.esperado_m) + fs + 4, { anchor: "middle" });
+    }
 
     // cifra diaria y media (la del periodo previo se prolonga hasta la línea de la crisis)
     svg.append("path").attr("fill", "none").attr("stroke", cfg.color).attr("opacity", .35).attr("stroke-width", 1.5)
@@ -95,8 +97,15 @@ async function serieDiaria(sel, cfg) {
     const lm = d3.line().x(d => x(d.dia)).y(d => yA(d.n_est_m));
     const pre = arr.filter(d => d.periodo === "pre");
     pre.push({ ...pre.at(-1), dia: crisis });
-    [pre, post].forEach(s => svg.append("path").attr("fill", "none").attr("stroke", cfg.color)
+    (cfg.sinEsperado ? [arr] : [pre, post]).forEach(s => svg.append("path").attr("fill", "none").attr("stroke", cfg.color)
       .attr("stroke-width", 3).attr("stroke-linejoin", "round").attr("d", lm(s)));
+
+    // anotación: círculo sobre el pico de la cifra diaria (cfg.anotacion = { dia, texto })
+    if (cfg.anotacion) {
+      const a = arr.find(d => +d.dia === +dia(cfg.anotacion.dia)), ax = x(a.dia), ay = yA(a.n_est);
+      svg.append("circle").attr("cx", ax).attr("cy", ay).attr("r", 11).attr("fill", "none").attr("stroke", GRIS.oscuro).attr("stroke-width", 1.5);
+      texto(svg, cfg.anotacion.texto, ax + 17, ay + 4, { size: fs + 1 });
+    }
 
     // barras de volumen
     apilado.forEach(d => d.partes.forEach(p => svg.append("rect").attr("x", x(d.dia) - bw / 2).attr("width", bw)
@@ -112,7 +121,7 @@ async function serieDiaria(sel, cfg) {
     const mostrar = ev => {
       const d = porDia.get(+d3.utcDay.round(x.invert(d3.pointer(ev, svg.node())[0])));
       if (!d) return;
-      const v = vol.get(+d.dia), px = x(d.dia), esp = d.dia >= crisis;
+      const v = vol.get(+d.dia), px = x(d.dia), esp = d.dia >= crisis && !cfg.sinEsperado;
       guia.attr("x1", px).attr("x2", px).attr("opacity", .8);
       punto.attr("cx", px).attr("cy", yA(d.n_est_m)).attr("opacity", 1);
       union.attr("x1", px).attr("x2", px).attr("y1", yA(d.n_est_m)).attr("y2", yA(d.esperado_m)).attr("opacity", esp ? 1 : 0);
@@ -123,7 +132,7 @@ async function serieDiaria(sel, cfg) {
       tip.html(`<b>${d3.utcFormat("%d/%m/%Y")(d.dia)}</b>` +
         `<br><span style="${sub(cfg.colorDia ?? cfg.color)}">${cfg.medida}</span>: <b>${fmt(d.n_est)}</b>` +
         `<br><span style="${sub(cfg.color)}">Media 3 días</span>: <b>${fmt(d.n_est_m)}</b>` +
-        (esp ? `<br><span style="${sub(GRIS.oscuro, "dashed")}">Esperado</span>: <b>${fmt(d.esperado_m)}</b> (${fmt(d.esperado_inf_m)}–${fmt(d.esperado_sup_m)})` : "") +
+        (esp && !cfg.sinEsperado ? `<br><span style="${sub(GRIS.oscuro, "dashed")}">Esperado</span>: <b>${fmt(d.esperado_m)}</b> (${fmt(d.esperado_inf_m)}–${fmt(d.esperado_sup_m)})` : "") +
         `<hr>${filas.join("<br>")}`)
         .style("opacity", 1);
       const tw = tip.node().offsetWidth;   // a la derecha del cursor si cabe; si no, a la izquierda

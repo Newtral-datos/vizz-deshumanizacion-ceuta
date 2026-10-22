@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deshumanización por origen</title><link rel="stylesheet" href="estilo.css"></head>
+<body><div id="grafico"></div>
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script><script src="js/serie.js"></script><script src="js/barras-simples-apiladas.js"></script>
+<script>
+barrasApiladas("#grafico", {
+  datos: "datos/deshumanizacion-esferas.csv",
+  momentos: ["Mundial", "Entre el Mundial y la crisis", "Crisis y después"],
+  etiquetas: { "Mundial": "Mundial<br>30/06-19/07", "Entre el Mundial y la crisis": "Entre el Mundial<br>y la crisis<br>20/07-29/07", "Crisis y después": "Crisis y después<br>30/07-29/08" },
+  partes: { "Española": "#01f3b3", "Indeterminada": "#c8c8c8", "No española": "#494949" },
+  nombres: { "Española": "Cuentas españolas", "Indeterminada": "Origen sin determinar", "No española": "Cuentas latinas" },
+  textoClaro: ["No española"], yMax: 1000,
+  titulo: "Durante el Mundial, la mayoría de publicaciones deshumanizadoras procedían de <span class='caja caja-oscura'>cuentas latinas</span>, mientras que tras la crisis de Ceuta lo hacía de <span class='caja caja-verde'>españolas</span>",
+  subtitulo: "Media de publicaciones deshumanizadoras en X, según la procedencia del autor. En <span class='caja caja-gris'>gris</span> se indican los mensajes procedentes de cuentas para las que no se ha podido determinar el origen del autor",
+  eje: "Publicaciones deshumanizadoras al día", medida: "Total al día",
+  pie: "Sin ponderar. Mensajes deshumanizadores: suma de la probabilidad que da el modelo a cada tweet. Origen según la probabilidad de que la cuenta pertenezca a la conversación española: española (≥ 0,8), sin determinar y no española (≤ 0,2, sobre todo América Latina).<br><span class='credito'>Gráfico: Newtral.es. ▪️ Fuentes: análisis propio a partir de datos de X y los modelos de lenguaje RoBERTuito (Base y Hate Speech).</span>"
+});
+</script></body></html>

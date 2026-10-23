@@ -9,12 +9,16 @@ const fmt = d3.formatLocale({ decimal: ",", thousands: ".", grouping: [3], curre
 const fecha = d3.utcFormat("%d/%m");
 const dia = d3.utcParse("%Y-%m-%d");
 // textos acortados de la leyenda (el pop-up conserva los nombres completos)
-const LEYENDA = { "Mensajes deshumanizadores": "Deshumanizadores", "Odio hacia los inmigrantes": "Odio hacia inmigrantes", "Odio hacia inmigrantes": "Odio hacia inmigrantes", "Sobre migración, sin odio": "Migración sin odio", "Resto": "Resto" };
-// Dibuja la leyenda con espacio propio: si al ancho actual se parte en varias líneas, devuelve el alto extra que necesita.
-function leyendaPanel(lienzo, contenidos, colores, top, left) {
-  const l = lienzo.append("div").attr("class", "leyenda leyenda-panel").style("top", top + "px").style("left", left + "px")
-    .html(contenidos.map(c => `<span><i style="background:${colores[c]}"></i>${LEYENDA[c] ?? c}</span>`).join(""));
-  return Math.max(0, Math.ceil(l.node().offsetHeight) - 26);
+const LEYENDA = { "Mensajes deshumanizadores": "Deshumanizadoras", "Odio hacia los inmigrantes": "Odio hacia migrantes", "Odio hacia inmigrantes": "Odio hacia migrantes", "Sobre migración, sin odio": "Migración sin odio", "Resto": "Resto" };
+// HTML de la leyenda, que va debajo del gráfico (fuera del SVG) y se parte en las líneas que haga falta
+const leyendaHtml = (contenidos, colores) => `<div class="leyenda">` +
+  contenidos.map(c => `<span><i style="background:${colores[c]}"></i>${LEYENDA[c] ?? c}</span>`).join("") + `</div>`;
+// Altura del pop-up: a la del dedo/cursor (en móvil, por encima del dedo para no taparlo), sin salirse del gráfico
+function topTip(tip, ev, svg, H, movil) {
+  const y = d3.pointer(ev, svg.node())[1], th = tip.node().offsetHeight;
+  let t = movil ? y - th - 24 : y - th / 2;
+  if (movil && t < 0) t = y + 24;
+  return Math.max(0, Math.min(t, H - th)) + "px";
 }
 const FUENTE = '"Helvetica Neue", Helvetica, Arial, sans-serif';
 
@@ -32,7 +36,7 @@ async function serieDiaria(sel, cfg) {
   });
 
   const cont = d3.select(sel).classed("serie", true);
-  cont.html(`<h2>${cfg.titulo}</h2><p class="sub">${cfg.subtitulo}</p><div class="lienzo"></div><p class="pie">${cfg.pie}</p>`);
+  cont.html(`<h2>${cfg.titulo}</h2><p class="sub">${cfg.subtitulo}</p><div class="lienzo"></div>${leyendaHtml(contenidos, colores)}<p class="pie">${cfg.pie}</p>`);
   const lienzo = cont.select(".lienzo");
   let ancho = 0;
   const redibujar = () => {
@@ -42,10 +46,10 @@ async function serieDiaria(sel, cfg) {
   new ResizeObserver(redibujar).observe(lienzo.node());
   redibujar();
 
-  function dibujar(W, extra = 0) {
+  function dibujar(W) {
     lienzo.selectAll("*").remove();
     const movil = W < 560, fs = movil ? 12 : 13;
-    const hA = movil ? 280 : 400, hB = movil ? 130 : 160, gap = 66 + extra;
+    const hA = movil ? 280 : 400, hB = movil ? 130 : 160, gap = 40;
     const m = { t: 8, r: 10, b: 26, l: movil ? 58 : 66 }, H = m.t + hA + gap + hB + m.b;
     const svg = lienzo.append("svg").attr("width", W).attr("height", H).attr("role", "img").attr("aria-label", cfg.titulo).style("font-family", FUENTE);
     const [x0, x1] = (cfg.rango ?? ["2026-06-29", "2026-08-29"]).map(dia);
@@ -68,9 +72,7 @@ async function serieDiaria(sel, cfg) {
     const mx = (x(dia(MUNDIAL[0])) + x(dia(MUNDIAL[1]))) / 2;
     texto(svg, "Mundial", mx, yA(cfg.yMundial ?? yA.domain()[1] * 0.89) + 4, { color: GRIS.medio, anchor: "middle", size: fs + 2 });
     if (!cfg.sinCrisis) texto(svg, "30 de julio", 0, 0, { anchor: "end" }).attr("transform", `translate(${x(crisis) - 11},${m.t + 40}) rotate(-90)`);
-    const ext = leyendaPanel(lienzo, contenidos, colores, topB - 28 - extra, m.l);
-    if (ext > extra) return dibujar(W, ext);   // la leyenda necesita más sitio: se amplía el hueco y se redibuja
-    texto(svg, "Total de publicaciones analizadas cada día:", m.l, topB - 38 - extra, { size: fs + 2 });
+    texto(svg, "Total de publicaciones analizadas cada día:", m.l, topB - 14, { size: fs + 2 });
 
     // eje x: una marca por semana (cada dos en pantallas estrechas)
     const ticks = d3.utcMonday.every(movil ? 2 : 1).range(x0, x1);
@@ -144,7 +146,7 @@ async function serieDiaria(sel, cfg) {
         `<hr>${filas.join("<br>")}`)
         .style("opacity", 1);
       const tw = tip.node().offsetWidth;   // a la derecha del cursor si cabe; si no, a la izquierda
-      tip.style("left", Math.max(0, px + 8 + tw > W ? px - 8 - tw : px + 8) + "px");
+      tip.style("left", Math.max(0, px + 8 + tw > W ? px - 8 - tw : px + 8) + "px").style("top", topTip(tip, ev, svg, H, movil));
     };
     const ocultar = () => { [guia, union, punto, puntoEsp].forEach(e => e.attr("opacity", 0)); tip.style("opacity", 0); };
     svg.append("rect").attr("x", m.l).attr("y", m.t).attr("width", W - m.l - m.r).attr("height", topB + hB - m.t)

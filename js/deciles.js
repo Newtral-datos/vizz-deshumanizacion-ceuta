@@ -66,7 +66,7 @@ async function decilesFacetas(sel, cfg) {
         tip.html(`<b>${etapa}. Decil ${dec}</b>` + filas.map(f => `<br><span style="${sub(cfg.series[f.k])}">${cfg.nombres?.[f.k] ?? f.k}</span>: <b>${fmt(f.d[v])}</b>`).join(""))
           .style("opacity", 1);
         const ax = ox + xd(dec), tw = tip.node().offsetWidth;
-        tip.style("left", Math.max(0, ax + 10 + tw > W ? ax - 10 - tw : ax + 10) + "px").style("top", (oy + tit + 10) + "px");
+        tip.style("left", Math.max(0, ax + 10 + tw > W ? ax - 10 - tw : ax + 10) + "px").style("top", topTip(tip, ev, svg, H, movil));
       };
       g.append("rect").attr("width", wP).attr("height", hP).attr("fill", "none").attr("pointer-events", "all")
         .on("pointermove", mostrar).on("pointerdown", mostrar).on("pointerleave", () => { guia.attr("opacity", 0); puntos.forEach(c => c.attr("opacity", 0)); tip.style("opacity", 0); });

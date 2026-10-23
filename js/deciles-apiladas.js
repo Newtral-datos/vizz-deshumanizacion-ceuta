@@ -62,14 +62,14 @@ async function decilesApiladas(sel, cfg) {
       pilas[i].forEach(p => {
         const x0 = x(p.decil) - x.step() * x.paddingInner() / 2;
         g.append("rect").attr("x", x0).attr("width", x.step()).attr("y", 0).attr("height", hP).attr("fill", "none").attr("pointer-events", "all")
-          .on("pointermove pointerdown", () => {
+          .on("pointermove pointerdown", ev => {
             sombra.attr("x", x0).attr("width", x.step()).attr("opacity", .5).lower();
             const rango = p.desde != null ? ` (${fmt(p.desde)}–${fmt(p.hasta)} seguidores)` : "";
             tip.html(`<b>${etapa}</b><br><b>Decil ${p.decil}</b>${rango}<br><b>${dec(p.total)}</b> ${cfg.unidad}<hr>` +
               [...p.trozos].reverse().map(t => `<i style="background:${cfg.partes[t.p]}"></i>${t.p}: <b>${dec(t.n)}</b>`).join("<br>")).style("opacity", 1);
             const ax = ox + x(p.decil) + x.bandwidth() / 2, tw = tip.node().offsetWidth;
             tip.style("left", Math.max(0, ax + x.bandwidth() / 2 + 8 + tw > W ? ax - x.bandwidth() / 2 - 8 - tw : ax + x.bandwidth() / 2 + 8) + "px")
-              .style("top", (oy + tit + 10) + "px");
+              .style("top", topTip(tip, ev, svg, H, movil));
           })
           .on("pointerleave", () => { sombra.attr("opacity", 0); tip.style("opacity", 0); });
       });

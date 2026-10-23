@@ -17,7 +17,6 @@ body { margin:0; padding:16px; font:14px/1.4 "Helvetica Neue",Helvetica,Arial,sa
 .serie .sub .caja { border-width:2px; padding:0 .2em; }
 .serie .leyenda { display:flex; gap:6px 16px; flex-wrap:wrap; font-size:.8rem; margin-bottom:6px; }
 .serie .leyenda i { display:inline-block; width:12px; height:12px; margin-right:5px; vertical-align:-1px; }
-.serie .leyenda-panel { position:absolute; margin:0; right:10px; }
 .serie .lienzo + .leyenda { margin:10px 0 0; }
 .serie .tabla { border-collapse:collapse; width:100%; max-width:420px; font-size:.9rem; margin:6px 0 0; }
 .serie .tabla th { text-align:left; border-bottom:2px solid #3a3a3a; padding:4px 10px 4px 0; }

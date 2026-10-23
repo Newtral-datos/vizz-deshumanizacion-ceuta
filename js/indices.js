@@ -75,7 +75,7 @@ async function indicesDiarios(sel, cfg) {
         `<br><span style="${sub(cfg.series[nombres[i]])}">${nombres[i]}</span>: <b>${fmt(d.valor)}</b><br>&nbsp;&nbsp;Media 3 días: <b>${fmt(d.media)}</b>`).join("<hr>"))
         .style("opacity", 1);
       const tw = tip.node().offsetWidth;
-      tip.style("left", Math.max(0, px + 8 + tw > W ? px - 8 - tw : px + 8) + "px");
+      tip.style("left", Math.max(0, px + 8 + tw > W ? px - 8 - tw : px + 8) + "px").style("top", topTip(tip, ev, svg, H, movil));
     };
     const ocultar = () => { guia.attr("opacity", 0); puntos.forEach(p => p.attr("opacity", 0)); tip.style("opacity", 0); };
     svg.append("rect").attr("x", m.l).attr("y", m.t).attr("width", W - m.l - m.r).attr("height", hA)

@@ -8,6 +8,14 @@ const CRISIS = "2026-07-30", MUNDIAL = ["2026-06-30", "2026-07-19"];
 const fmt = d3.formatLocale({ decimal: ",", thousands: ".", grouping: [3], currency: ["", "€"] }).format(",.0f");
 const fecha = d3.utcFormat("%d/%m");
 const dia = d3.utcParse("%Y-%m-%d");
+// textos acortados de la leyenda (el pop-up conserva los nombres completos)
+const LEYENDA = { "Mensajes deshumanizadores": "Deshumanizadores", "Odio hacia los inmigrantes": "Odio hacia inmigrantes", "Odio hacia inmigrantes": "Odio hacia inmigrantes", "Sobre migración, sin odio": "Migración sin odio", "Resto": "Resto" };
+// Dibuja la leyenda con espacio propio: si al ancho actual se parte en varias líneas, devuelve el alto extra que necesita.
+function leyendaPanel(lienzo, contenidos, colores, top, left) {
+  const l = lienzo.append("div").attr("class", "leyenda leyenda-panel").style("top", top + "px").style("left", left + "px")
+    .html(contenidos.map(c => `<span><i style="background:${colores[c]}"></i>${LEYENDA[c] ?? c}</span>`).join(""));
+  return Math.max(0, Math.ceil(l.node().offsetHeight) - 26);
+}
 const FUENTE = '"Helvetica Neue", Helvetica, Arial, sans-serif';
 
 async function serieDiaria(sel, cfg) {
@@ -34,10 +42,10 @@ async function serieDiaria(sel, cfg) {
   new ResizeObserver(redibujar).observe(lienzo.node());
   redibujar();
 
-  function dibujar(W) {
+  function dibujar(W, extra = 0) {
     lienzo.selectAll("*").remove();
     const movil = W < 560, fs = movil ? 12 : 13;
-    const hA = movil ? 280 : 400, hB = movil ? 130 : 160, gap = 66;
+    const hA = movil ? 280 : 400, hB = movil ? 130 : 160, gap = 66 + extra;
     const m = { t: 8, r: 10, b: 26, l: movil ? 58 : 66 }, H = m.t + hA + gap + hB + m.b;
     const svg = lienzo.append("svg").attr("width", W).attr("height", H).attr("role", "img").attr("aria-label", cfg.titulo).style("font-family", FUENTE);
     const [x0, x1] = (cfg.rango ?? ["2026-06-29", "2026-08-29"]).map(dia);
@@ -60,9 +68,9 @@ async function serieDiaria(sel, cfg) {
     const mx = (x(dia(MUNDIAL[0])) + x(dia(MUNDIAL[1]))) / 2;
     texto(svg, "Mundial", mx, yA(cfg.yMundial ?? yA.domain()[1] * 0.89) + 4, { color: GRIS.medio, anchor: "middle", size: fs + 2 });
     if (!cfg.sinCrisis) texto(svg, "30 de julio", 0, 0, { anchor: "end" }).attr("transform", `translate(${x(crisis) - 11},${m.t + 40}) rotate(-90)`);
-    texto(svg, "Total de publicaciones analizadas cada día:", m.l, topB - 38, { size: fs + 2 });
-    lienzo.append("div").attr("class", "leyenda leyenda-panel").style("top", (topB - 28) + "px").style("left", m.l + "px")
-      .html(contenidos.map(c => `<span><i style="background:${colores[c]}"></i>${cfg.tooltip?.[c] ?? c}</span>`).join(""));
+    const ext = leyendaPanel(lienzo, contenidos, colores, topB - 28 - extra, m.l);
+    if (ext > extra) return dibujar(W, ext);   // la leyenda necesita más sitio: se amplía el hueco y se redibuja
+    texto(svg, "Total de publicaciones analizadas cada día:", m.l, topB - 38 - extra, { size: fs + 2 });
 
     // eje x: una marca por semana (cada dos en pantallas estrechas)
     const ticks = d3.utcMonday.every(movil ? 2 : 1).range(x0, x1);

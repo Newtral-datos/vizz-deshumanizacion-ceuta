@@ -57,7 +57,7 @@ async function barrasApiladas(sel, cfg) {
       svg.append("rect").attr("x", px0).attr("width", w).attr("y", m.t).attr("height", h).attr("fill", "none").attr("pointer-events", "all")
         .on("pointermove pointerdown", () => {
           sombra.attr("x", px0).attr("width", w).attr("opacity", .5).lower();
-          tip.html(`<b>${(cfg.etiquetas?.[p.mo] ?? p.mo).replace("<br>", " ")}</b><hr>` +
+          tip.html(`<b>${(cfg.etiquetas?.[p.mo] ?? p.mo).replace("<br>", " ")}</b>${cfg.fechas?.[p.mo] ? `<br>${cfg.fechas[p.mo]}` : ""}<hr>` +
             [...p.trozos].reverse().map(t => `<i style="background:${partes[t.p]}"></i>${cfg.nombres?.[t.p] ?? t.p}: <b>${fmt(t.n)}</b>`).join("<br>") +
             `<hr>${cfg.medida}: <b>${fmt(p.total)}</b>`).style("opacity", 1);
           const cx = x(p.mo) + x.bandwidth() / 2, tw = tip.node().offsetWidth, d = x.bandwidth() / 2 + 8;

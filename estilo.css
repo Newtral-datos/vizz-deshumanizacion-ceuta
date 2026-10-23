@@ -24,3 +24,8 @@ body { margin:0; padding:16px; font:14px/1.4 "Helvetica Neue",Helvetica,Arial,sa
 .serie .tabla td { border-bottom:1px solid #ececec; padding:3px 10px 3px 0; }
 .serie .tabla .variantes { display:block; font-size:.78rem; color:#777; }
 .serie .tabla .num { text-align:right; padding-right:0; font-variant-numeric:tabular-nums; }
+@media (max-width:560px) {
+  .serie .sub { font-size:.8rem; }
+  .serie .pie { font-size:.66rem; }
+  .serie .pie .credito { font-size:.7rem; }
+}
